@@ -21,8 +21,8 @@ class HashTable:
     """
 
     def __init__(self, capacity):
-        # Your code here
-
+        self.capacity = capacity
+        self.buckets = [None] * capacity
 
     def get_num_slots(self):
         """
@@ -34,7 +34,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return self.capacity
+
 
 
     def get_load_factor(self):
@@ -53,7 +54,12 @@ class HashTable:
         Implement this, and/or DJB2.
         """
 
-        # Your code here
+        FNV_prime = 1099511628211
+        hash = 14695981039346656037
+        for c in key:
+            hash = hash * FNV_prime
+            hash = hash ^ ord(c)
+        return hash
 
 
     def djb2(self, key):
@@ -62,7 +68,10 @@ class HashTable:
 
         Implement this, and/or FNV-1.
         """
-        # Your code here
+        hash = 5381
+        for b in key:
+            hash = (hash * 33) + ord(b)
+        return hash
 
 
     def hash_index(self, key):
@@ -70,8 +79,8 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        return self.fnv1(key) % self.capacity
+        # return self.djb2(key) % self.capacity
 
     def put(self, key, value):
         """
@@ -81,7 +90,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        self.buckets[self.hash_index(key)] = HashTableEntry(key, value)
 
 
     def delete(self, key):
@@ -92,7 +101,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        self.buckets[self.hash_index(key)] = None
 
 
     def get(self, key):
@@ -103,7 +112,12 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        node = self.buckets[self.hash_index(key)]
+        if node:
+            return node.value
+        else:
+            return node
+        
 
 
     def resize(self, new_capacity):
@@ -113,7 +127,11 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        self.capacity = new_capacity
+        new_buckets = self.buckets
+        self.buckets = [None] * self.capacity
+        for node in new_buckets:
+            self.put(node.key, node.value)
 
 
 
