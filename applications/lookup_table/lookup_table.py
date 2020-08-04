@@ -1,5 +1,7 @@
-# Your code here
-
+import math
+import random
+from hashtable import HashTable
+cache = HashTable(8)
 
 def slowfun_too_slow(x, y):
     v = math.pow(x, y)
@@ -14,7 +16,13 @@ def slowfun(x, y):
     Rewrite slowfun_too_slow() in here so that the program produces the same
     output, but completes quickly instead of taking ages to run.
     """
-    # Your code here
+    key = str(x) + str(y)
+    if cache.get(key):
+        return cache.get(key)
+    else:
+        v = slowfun_too_slow(x, y)
+        cache.put(key, v)
+        return cache.get(key)
 
 
 
