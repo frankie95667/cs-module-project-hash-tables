@@ -1,3 +1,5 @@
+import math
+
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -95,6 +97,8 @@ class HashTable:
         if insert_location is None:
             self.buckets[self.hash_index(key)] = HashTableEntry(key, value)
             self.load += 1
+            if self.get_load_factor() > 0.7:
+                self.resize(self.capacity * 2)
         else:
             node = self.buckets[self.hash_index(key)]
             if node.key == key:
@@ -136,6 +140,12 @@ class HashTable:
                 if node.key == key:
                     self.buckets[self.hash_index(key)] = None
                     self.load -= 1
+                    if self.get_load_factor() < 0.2 and self.capacity > 8:
+                        if self.capacity / 2 >= 8:
+                            self.resize(math.floor(self.capacity / 2))
+                        else:
+                            self.resize(MIN_CAPACITY)
+
                 else:
                     return
         else:
@@ -177,11 +187,12 @@ class HashTable:
         new_buckets = self.buckets
         self.buckets = [None] * self.capacity
         for node in new_buckets:
-            self.put(node.key, node.value)
-            if node.next:
-                while node.next:
-                    self.put(node.next.key, node.next.value)
-                    node = node.next
+            if node:
+                self.put(node.key, node.value)
+                if node.next:
+                    while node.next:
+                        self.put(node.next.key, node.next.value)
+                        node = node.next
             
 
 
