@@ -1,5 +1,18 @@
 def word_count(s):
-    # Your code here
+    chars_to_remove = set(['"', ':', ';', ',', '.', '-', '+', '=', '/', '\\', '|', '[', ']', '{', '}', '(', ')', '*', '^', '&'])
+    count = {}
+    s = ' '.join(s.split())
+    s = ''.join([c for c in s if c not in chars_to_remove]).lower()
+    if s == '':
+        return {}
+    words = s.split(" ")
+    for word in words:
+        if word in count:
+            count[word] += 1
+        else:
+            count[word] = 1
+    return count
+
 
 
 
