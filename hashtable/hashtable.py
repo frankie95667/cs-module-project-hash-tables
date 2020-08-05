@@ -110,6 +110,9 @@ class HashTable:
                     return
                 node = node.next
             node.next = HashTableEntry(key, value)
+            self.load += 1
+        if self.get_load_factor() > 0.7:
+            self.resize(self.capacity * 2)
                     
             
 
@@ -127,13 +130,31 @@ class HashTable:
             if node.next:
                 if node.key == key:
                     self.buckets[self.hash_index(key)] = node.next
+                    self.load -= 1
+                    if self.get_load_factor() < 0.2 and self.capacity > 8:
+                        if self.capacity / 2 >= 8:
+                            self.resize(math.floor(self.capacity / 2))
+                        else:
+                            self.resize(MIN_CAPACITY)
                     return
                 while node is not None:
                     if node.next is not None and node.next.key == key:
                         if node.next.next is not None:
                             node.next = node.next.next
+                            self.load -= 1
+                            if self.get_load_factor() < 0.2 and self.capacity > 8:
+                                if self.capacity / 2 >= 8:
+                                    self.resize(math.floor(self.capacity / 2))
+                                else:
+                                    self.resize(MIN_CAPACITY)
                         else:
                             node.next = None
+                            self.load -= 1
+                            if self.get_load_factor() < 0.2 and self.capacity > 8:
+                                if self.capacity / 2 >= 8:
+                                    self.resize(math.floor(self.capacity / 2))
+                                else:
+                                    self.resize(MIN_CAPACITY)
                         break
                     node = node.next
             else:

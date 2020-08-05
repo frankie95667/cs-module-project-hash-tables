@@ -12,4 +12,4 @@ def f(x):
     return x * 4 + 6
 
 # Your code here
-
+print(f(1) + f(1) == f(12) - f(7))
