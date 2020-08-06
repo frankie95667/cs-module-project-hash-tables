@@ -79,6 +79,6 @@ full-featured.)
 - [x] [No Duplicates](applications/no_dups/)
 - [x] [Markov Chains](applications/markov/)
 - [x] [Histogram](applications/histo/)
-- [ ] [Cracking Caesar Ciphers](applications/crack_caesar/)
+- [x] [Cracking Caesar Ciphers](applications/crack_caesar/)
 - [ ] [Sum and Difference](applications/sumdiff/)
 

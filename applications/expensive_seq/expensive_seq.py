@@ -1,15 +1,17 @@
 from hashtable import HashTable
-cache = HashTable(8)
+# cache = HashTable(8)
+cache = {}
 
 def expensive_seq(x, y, z):
     key = str(x) + str(y) + str(z)
     if x <= 0:
         return y + z
-    elif cache.get(key):
-        return cache.get(key)
+    # elif cache.get(key):
+    elif key in cache:
+        return cache[key]
     else:
-        cache.put(key, expensive_seq(x - 1, y + 1, z) + expensive_seq(x - 2, y + 2, z * 2) + expensive_seq(x - 3, y + 3, z * 3))
-        return cache.get(key)
+        cache[key] = expensive_seq(x - 1, y + 1, z) + expensive_seq(x - 2, y + 2, z * 2) + expensive_seq(x - 3, y + 3, z * 3)
+        return cache[key]
 
 
 
