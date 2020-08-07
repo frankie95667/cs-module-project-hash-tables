@@ -80,5 +80,5 @@ full-featured.)
 - [x] [Markov Chains](applications/markov/)
 - [x] [Histogram](applications/histo/)
 - [x] [Cracking Caesar Ciphers](applications/crack_caesar/)
-- [ ] [Sum and Difference](applications/sumdiff/)
+- [x] [Sum and Difference](applications/sumdiff/)
 
